@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+
+    <title>yordans tic tac toe</title>
+    <link rel="stylesheet" href="master.css">
+</head>
+
+<body>
+
+    <div id="game-view">
+        <div id="game-view-info">
+            {{ infoMessage}}
+        </div>
+
+        <div id="game-view-squares">
+            <div
+                 v-for="(square, i) in squares" 
+                 v-on:click="doMove(i)"
+                 v-bind:class="{ marked: square.isMarked }"
+                 class="game-view-square">
+                {{ square.value }}
+           </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js" charset="utf-8"></script>
+    <script src="square.js" charset="utf-8"></script>
+    <script src="game.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        let activeGame = new Game();
+        
+        let gameVue = new Vue({
+            el: '#game-view',
+            data: activeGame,
+
+            computed: {
+                infoMessage: function () {
+                    if (this.inProgress) {
+                        return 'It is ' + this.currentTurn + '\'s turn.';
+                    }
+
+                    if (this.winner) {
+                        return this.winner + ' wins!';
+                    }
+
+                    if (!this.winner && !this.inProgress) {
+                        return 'Draw game :)';
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
